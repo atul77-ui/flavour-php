@@ -25,6 +25,7 @@ $recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <span class="brand-name">Fla<em>vour</em></span>
             <span class="brand-tagline">PHP Edition</span>
         </div>
+        <a href="add-recipe.php" class="btn-save" style="text-decoration:none: padding: 0.5rem 1 rem;">Add Recipe</a>
     </nav>
 
 
