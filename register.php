@@ -1,3 +1,33 @@
+<?php
+require_once "db.php";
+$error = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    $check = mysqli_prepare($conn, "Select id FROM user WHERE mail=?");
+    mysqli_stmt_bind_param($check,"s", $email);
+    mysqli_stmt_execute($check);
+    mysqli_stmt_store_result($check);
+    if(mysqli_stmt_num_rows($check) > 0){
+        $error = "That email is already registered.";
+    }
+    else{
+        $hashed = password_hash($password,PASSWORD_DEFAULT);
+        $sql = "INSERT INTO recipes (username, email, password) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $username, $email, $password);
+        mysqli_stmt_execute($stmt);
+
+    }
+
+    header("Location: index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +51,13 @@
         <div class="section-heading">
             <span class="section-title">Create Account</span>
         </div>
+
+        <?php if ($error): ?>
+            <p style="color: #b8a3a3a; font-family:'DM mono'monospace;
+                font-size:0.65rem; margin-bottom:1rem">
+                <?php echo $error; ?>
+            </p>
+            <?php endif; ?>
 
 
         <form action="register.php" method="POST" class="recipe-form">
