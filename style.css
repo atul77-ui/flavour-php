@@ -344,6 +344,7 @@ nav {
   line-height: 1.25;
   margin-bottom: 0.3rem;
   display: -webkit-box;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   min-height: 2.6rem;
